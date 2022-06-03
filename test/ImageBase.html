@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ImageBase</title>
+
+        <script type="text/javascript" src="../js/preprocess.js"></script>
+        <script type="text/javascript" src="../js/ImageBase.js"></script>
+        <script type="text/javascript" src="../js/numjs.min.js"></script>
+        <script type="text/javascript" src="../js/opencv.js" async onload="console.log('opencv js end loading');"></script>
+        
+        <script>
+            unit_test();
+        </script>
+    </head>
+
+    <body>
+        <input id="html_image_uploader" type="file" multiple="multiple">
+        <br>
+        <button style="float: left;" onclick="upload_image()">上傳檔案</button>
+    </body>
+</html>
