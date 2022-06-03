@@ -71,22 +71,24 @@ async function upload_image(var1){
     let file_list = document.getElementById("html_image_uploader").files;
     for (let i = 0; i < file_list.length; i++){
         let file = file_list[i];
-        let data = await read_image(file);
-        console.log(data);
+        let img = await read_image(file);
     }
 }
 
 
 /** 
  * description
- * @params {type} file
+ * @params {file} file
  * @returns matrix2d
  */ 
 async function read_image(file){
     let img = new Image();
-    img.src = URL.createObjectURL(file)
 
-    console.log(img.src);
+    await new Promise((resolve) => {
+        let fileReader = new FileReader();
+        fileReader.onload = (e) => resolve(img.src = fileReader.result);
+        fileReader.readAsDataURL(file);
+    });
 
     let ctx = document.createElement("canvas");
     ctx.width = img.width;
@@ -95,9 +97,7 @@ async function read_image(file){
     ctx = ctx.getContext("2d");
     ctx.drawImage(img, 0, 0, img.width, img.height);
 
-    let data = ctx.getImageData(0, 0, img.width, img.height);
-    
-    return data;
+    return ctx.getImageData(0, 0, img.width, img.height);
 }
 
 
