@@ -1,4 +1,43 @@
 /** 
+ * define const variable
+ */ 
+let upload_image_array = new Array();
+let image_index = -1;
+let target_canvas_id = "html_test_img";
+
+
+/** 
+ * change show image array on canvas
+ * @params {string} dir need equal in ["sub", "plus"]
+ */ 
+function change_image(dir){
+    switch (dir){
+        case "sub":
+            if (image_index > 0){
+                image_index--;
+                draw_image(upload_image_array[image_index]);
+            }
+            break;
+        case "plus":
+            if (image_index < upload_image_array.length){
+                image_index++;
+                draw_image(upload_image_array[image_index]);
+            }
+            break;
+    }
+}
+
+
+/** 
+ * example for convert Image to cv.Mat
+ * @returns cv.Mat
+ */ 
+function convert_image_data_to_opencv_mat(){
+    return cv.imread(target_canvas_id);
+}
+
+
+/** 
  * get image data of x, y, channel
  * @params {matrix2d} image
  * @params {int} x
@@ -6,8 +45,8 @@
  * @params {int} c mean RGBA channel
  * @returns type
  */ 
-function get_image_data(image, x, y, c){
-    return image.data[(y * image.width + x) * 4 + c];
+function get_image_data(img, x, y, c){
+    return img.data[(y * img.width + x) * 4 + c];
 }
 
 
@@ -18,8 +57,8 @@ function get_image_data(image, x, y, c){
  * @params {matrix 2d} image2
  * @returns double
  */ 
-function image_cos_similarity(image1, image2){
-    if (image1.length != image2.length){
+function image_cos_similarity(img1, img2){
+    if (img1.length != img2.length){
         throw "two image length not equal";
     }
 
@@ -28,10 +67,10 @@ function image_cos_similarity(image1, image2){
     let dot = 0;
 
     // get sum and dot image vector
-    for (let i = 0; i < image1.length; i++){
-        l1 += Math.pow(image1[i], 2);
-        l2 += Math.pow(image2[i], 2);
-        dot += image1[i] * image2[i];
+    for (let i = 0; i < img1.length; i++){
+        l1 += Math.pow(img1[i], 2);
+        l2 += Math.pow(img2[i], 2);
+        dot += img1[i] * img2[i];
     }
 
     // calculator sqrt l1 and l2
@@ -44,34 +83,20 @@ function image_cos_similarity(image1, image2){
 
 
 /** 
- * now have bug, need nore time to write.
- * @returns matrix2d
- */ 
-function test_matrix2d(){
-    let ctx = document.createElement("canvas");
-    let img = document.getElementById("test_img");
-
-    ctx.width = img.width;
-    ctx.height = img.height;
-
-    ctx = ctx.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    return ctx.getImageData(0, 0, img.width, img.height);
-}
-
-
-/** 
  * description
- * @params {type} var1
- * @params {type} var2
  * @returns type
  */ 
-async function upload_image(var1){
+async function upload_image(){
     let file_list = document.getElementById("html_image_uploader").files;
     for (let i = 0; i < file_list.length; i++){
         let file = file_list[i];
-        let img = await read_image(file);
+        let img = await read_image_with_uploader(file);
+        upload_image_array.push(img);
+    }
+    
+    if (upload_image_array.length > 0){
+        draw_image(upload_image_array[0]);
+        image_index = 0;
     }
 }
 
@@ -79,9 +104,9 @@ async function upload_image(var1){
 /** 
  * description
  * @params {file} file
- * @returns matrix2d
+ * @returns Image
  */ 
-async function read_image(file){
+async function read_image_with_uploader(file){
     let img = new Image();
 
     await new Promise((resolve) => {
@@ -90,14 +115,21 @@ async function read_image(file){
         fileReader.readAsDataURL(file);
     });
 
-    let ctx = document.createElement("canvas");
+    return img;
+}
+
+
+/** 
+ * draw img to canvas with variable target_canvas_id
+ * @params {Image} img
+ */ 
+function draw_image(img){
+    let ctx = document.getElementById(target_canvas_id);
     ctx.width = img.width;
     ctx.height = img.height;
 
     ctx = ctx.getContext("2d");
     ctx.drawImage(img, 0, 0, img.width, img.height);
-
-    return ctx.getImageData(0, 0, img.width, img.height);
 }
 
 

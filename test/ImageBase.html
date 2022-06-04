@@ -7,7 +7,7 @@
         <script type="text/javascript" src="../js/ImageBase.js"></script>
         <script type="text/javascript" src="../js/numjs.min.js"></script>
         <script type="text/javascript" src="../js/opencv.js" async onload="console.log('opencv js end loading');"></script>
-        
+
         <script>
             unit_test();
         </script>
@@ -15,7 +15,17 @@
 
     <body>
         <input id="html_image_uploader" type="file" multiple="multiple">
+        <button onclick="upload_image()">上傳檔案</button>
         <br>
-        <button style="float: left;" onclick="upload_image()">上傳檔案</button>
+
+        <button onclick="change_image('sub')">上一張</button>
+        <button onclick="change_image('plus')">下一張</button>
+        <br>
+
+        <button onclick="unit_test()">run unit test</button>
+        <button onclick="console.log(convert_image_data_to_opencv_mat())">convert image data to opencv mat</button>
+        <br>
+
+        <canvas id="html_test_img"></canvas>
     </body>
 </html>
