@@ -2,8 +2,8 @@
  * define const variable
  */ 
 let upload_image_array = new Array();
-let image_index = -1;
-let target_canvas_id = "html_test_img";
+let image_index = 0;
+let target_canvas_id = "html_src_img";
 
 
 /** 
@@ -19,12 +19,21 @@ function change_image(dir){
             }
             break;
         case "plus":
-            if (image_index < upload_image_array.length){
+            if (image_index + 1 < upload_image_array.length){
                 image_index++;
                 draw_image(upload_image_array[image_index]);
             }
             break;
     }
+}
+
+
+/** 
+ * show image count
+ */ 
+function show_image_count(){
+    let e = document.getElementById("html_image_count");
+    e.innerHTML = `${image_index + 1}/${upload_image_array.length}`;
 }
 
 
@@ -96,7 +105,6 @@ async function upload_image(){
     
     if (upload_image_array.length > 0){
         draw_image(upload_image_array[0]);
-        image_index = 0;
     }
 }
 
@@ -130,6 +138,22 @@ function draw_image(img){
 
     ctx = ctx.getContext("2d");
     ctx.drawImage(img, 0, 0, img.width, img.height);
+
+    show_image_count();
+}
+
+/** 
+ * description
+ * @params {file} file
+ * @returns Image
+ */ 
+function search_split_index(){
+    /**
+     * 想像一張圖被劃分成好幾等分，這些等分的大小split_image一樣。
+     * 接著split_image跟這些去做相似度比對，找出得分最高的。
+     * 根據得分最高的來做座標微調，微調至滿分的95%~99%即可。
+     * 此時就可求出split_image在目標圖片上的座標。
+     */
 }
 
 

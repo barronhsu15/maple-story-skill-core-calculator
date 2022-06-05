@@ -19,13 +19,22 @@
         <br>
 
         <button onclick="change_image('sub')">上一張</button>
+        <label id="html_image_count"></label>
         <button onclick="change_image('plus')">下一張</button>
         <br>
 
         <button onclick="unit_test()">run unit test</button>
         <button onclick="console.log(convert_image_data_to_opencv_mat())">convert image data to opencv mat</button>
+        <button onclick="img = convert_image_data_to_opencv_mat(); cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); cv.Canny(img, img, 50, 100, 3, false); cv.imshow('html_dst_img', img); img.delete();">Canny</button>
+        <button onclick="img = convert_image_data_to_opencv_mat(); cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); cv.imshow('html_dst_img', img); img.delete();">Gray</button>
+        <button onclick="img = convert_image_data_to_opencv_mat(); 
+                cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); 
+                cv.Laplacian(img, img, cv.CV_8U, 1, 1, 0, cv.BORDER_DEFAULT);
+                cv.imshow('html_dst_img', img);
+                img.delete();">Laplacian</button>
         <br>
 
-        <canvas id="html_test_img"></canvas>
+        <canvas id="html_src_img"></canvas>
+        <canvas id="html_dst_img"></canvas>
     </body>
 </html>
