@@ -5,6 +5,7 @@
 
         <script type="text/javascript" src="../js/preprocess.js"></script>
         <script type="text/javascript" src="../js/ImageBase.js"></script>
+        <script type="text/javascript" src="../js/ImageBaseTest.js"></script>
         <script type="text/javascript" src="../js/numjs.min.js"></script>
         <script type="text/javascript" src="../js/opencv.js" async onload="console.log('opencv js end loading');"></script>
 
@@ -15,7 +16,7 @@
 
     <body>
         <input id="html_image_uploader" type="file" multiple="multiple">
-        <button onclick="upload_image()">上傳檔案</button>
+        <button onclick="image_array = upload_image('html_image_uploader');">上傳檔案</button>
         <br>
 
         <button onclick="change_image('sub')">上一張</button>
@@ -24,10 +25,10 @@
         <br>
 
         <button onclick="unit_test()">run unit test</button>
-        <button onclick="console.log(convert_image_data_to_opencv_mat())">convert image data to opencv mat</button>
-        <button onclick="img = convert_image_data_to_opencv_mat(); cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); cv.Canny(img, img, 50, 100, 3, false); cv.imshow('html_dst_img', img); img.delete();">Canny</button>
-        <button onclick="img = convert_image_data_to_opencv_mat(); cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); cv.imshow('html_dst_img', img); img.delete();">Gray</button>
-        <button onclick="img = convert_image_data_to_opencv_mat(); 
+        <button onclick="console.log(convert_image_data_to_opencv_mat(target_canvas_id))">convert image data to opencv mat</button>
+        <button onclick="img = convert_image_data_to_opencv_mat(target_canvas_id); cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); cv.Canny(img, img, 50, 100, 3, false); cv.imshow('html_dst_img', img); img.delete();">Canny</button>
+        <button onclick="img = convert_image_data_to_opencv_mat(target_canvas_id); cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); cv.imshow('html_dst_img', img); img.delete();">Gray</button>
+        <button onclick="img = convert_image_data_to_opencv_mat(target_canvas_id); 
                 cv.cvtColor(img, img, cv.COLOR_RGB2GRAY, 0); 
                 cv.Laplacian(img, img, cv.CV_8U, 1, 1, 0, cv.BORDER_DEFAULT);
                 cv.imshow('html_dst_img', img);
@@ -36,8 +37,8 @@
 
         <hr>
 
-        <button onclick="src = convert_image_data_to_opencv_mat(); e = document.getElementById('html_image_input_number'); e.innerHTML = image_index + 1;">select ImageInput</button>
-        <button onclick="templ = convert_image_data_to_opencv_mat(); e = document.getElementById('html_image_target_number'); e.innerHTML = image_index + 1;">select ImageTarget</button>
+        <button onclick="src = convert_image_data_to_opencv_mat(target_canvas_id); e = document.getElementById('html_image_input_number'); e.innerHTML = image_index + 1;">select ImageInput</button>
+        <button onclick="templ = convert_image_data_to_opencv_mat(target_canvas_id); e = document.getElementById('html_image_target_number'); e.innerHTML = image_index + 1;">select ImageTarget</button>
         <br>
 
         ImageInput number:<label id="html_image_input_number"></label>
@@ -45,31 +46,16 @@
         ImageTarget number:<label id="html_image_target_number"></label>
         <br>
 
-        <button onclick="dst = new cv.Mat();
-                mask = new cv.Mat();
-                cv.matchTemplate(src, templ, dst, cv.TM_CCOEFF_NORMED, mask);
-                result = cv.minMaxLoc(dst, mask);
-                maxPoint = result.maxLoc;   //if need get maxval, you should result.maxVal
-                console.log(result);    //log
+        <button onclick="maxPoint = image_similarity(src, templ, true)[0];
                 color = new cv.Scalar(255, 0, 0, 255);
                 point = new cv.Point(maxPoint.x + templ.cols, maxPoint.y + templ.rows);
                 cv.rectangle(src, maxPoint, point, color, 2, cv.LINE_8, 0);
-                cv.imshow('html_dst_img', src);
-                dst.delete();
-                mask.delete();">Template Match</button>
-        <button onclick="dst = new cv.Mat();
-                mask = new cv.Mat();
-                crop = new cv.Mat();
-                cv.matchTemplate(src, templ, dst, cv.TM_CCOEFF_NORMED, mask);
-                result = cv.minMaxLoc(dst, mask);
-                maxPoint = result.maxLoc;   //if need get maxval, you should result.maxVal
-                console.log(result);    //log
+                cv.imshow('html_dst_img', src);">Template Match</button>
+        <button onclick="maxPoint = image_similarity(src, templ, true)[0];
                 //rect = new cv.Rect(maxPoint.x, maxPoint.y, src.cols - maxPoint.x, src.rows - maxPoint.y);
                 rect = new cv.Rect(maxPoint.x + 30, maxPoint.y + templ.rows, 605, 85);
                 crop = src.roi(rect);
                 cv.imshow('html_dst_img', crop);
-                dst.delete();
-                mask.delete();
                 crop.delete();">Template Match and Crop(mean cut)</button>
         <br>
 
