@@ -57,6 +57,20 @@
                 cv.imshow('html_dst_img', src);
                 dst.delete();
                 mask.delete();">Template Match</button>
+        <button onclick="dst = new cv.Mat();
+                mask = new cv.Mat();
+                crop = new cv.Mat();
+                cv.matchTemplate(src, templ, dst, cv.TM_CCOEFF_NORMED, mask);
+                result = cv.minMaxLoc(dst, mask);
+                maxPoint = result.maxLoc;   //if need get maxval, you should result.maxVal
+                console.log(result);    //log
+                //rect = new cv.Rect(maxPoint.x, maxPoint.y, src.cols - maxPoint.x, src.rows - maxPoint.y);
+                rect = new cv.Rect(maxPoint.x + 30, maxPoint.y + templ.rows, 605, 85);
+                crop = src.roi(rect);
+                cv.imshow('html_dst_img', crop);
+                dst.delete();
+                mask.delete();
+                crop.delete();">Template Match and Crop(mean cut)</button>
         <br>
 
         <canvas id="html_src_img"></canvas>
