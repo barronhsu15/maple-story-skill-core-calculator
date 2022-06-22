@@ -1,6 +1,6 @@
 var util = {
     /** 
-     * 2 dim point and 1 value struct.
+     * 2 dimension point and 1 value struct.
      * @params {int/double} x
      * @params {int/double} y
      * @params {any type} value
@@ -82,10 +82,11 @@ var util = {
 
 
     /** 
-     * description
+     * search a target in array.
+     * if target in array, will return idnex, else return -1
      * @params {array} array
      * @params {any type} target
-     * @returns int  if target in array, will return idnex, else return -1
+     * @returns int
      */ 
     search_array : 
     function search_array(array, target){

@@ -2,44 +2,60 @@
  * define const variable
  */ 
 let upload_image_array = new Array();
-let image_index = 0;
-let target_canvas_id = "html_src_img";
+let cut_image_array = new Array();
+let upload_image_index = 0;
+let cut_image_index = 0;
+let first_upload = true;
+let upload_image_count_id = "html_upload_image_count";
+let cut_image_count_id = "html_cut_image_count";
+let src_canvas_id = "html_src_img";
+let dst_canvas_id = "html_dst_img";
+let cut_canvas_id = "html_cut_img";
 
 
 /** 
  * change show image array on canvas
  * @params {string} dir need equal in ["sub", "plus"]
+ * @params {array} image_array
+ * @params {int} image_index
+ * @params {string} canvas_id
+ * @params {string} image_count_id
+ * @returns int
  */ 
-function change_image(dir){
+function change_image(dir, image_array, image_index, canvas_id, image_count_id){
     switch (dir){
         case "sub":
             if (image_index > 0){
                 image_index--;
-                draw_image(upload_image_array[image_index]);
+                draw_image(image_array, image_index, canvas_id, image_count_id);
             }
             break;
         case "plus":
-            if (image_index + 1 < upload_image_array.length){
+            if (image_index + 1 < image_array.length){
                 image_index++;
-                draw_image(upload_image_array[image_index]);
+                draw_image(image_array, image_index, canvas_id, image_count_id);
             }
             break;
     }
+    return image_index;
 }
 
 
 /** 
- * show image count
+ * show image count at image_count_id
+ * @params {array} image_array
+ * @params {int} image_index
+ * @params {string} image_count_id
  */ 
-function show_image_count(){
-    let e = document.getElementById("html_image_count");
-    e.innerHTML = `${image_index + 1}/${upload_image_array.length}`;
+function show_image_count(image_array, image_index, image_count_id){
+    let e = document.getElementById(image_count_id);
+    e.innerHTML = `${image_index + 1}/${image_array.length}`;
 }
 
 
 /** 
- * description
- * @returns type
+ * upload image to upload_image_array
+ * @params {string} image_uploader_id
  */ 
 async function upload_image(image_uploader_id){
     let file_list = document.getElementById(image_uploader_id).files;
@@ -49,14 +65,16 @@ async function upload_image(image_uploader_id){
         upload_image_array.push(img);
     }
     
-    if (upload_image_array.length > 0){
-        draw_image(upload_image_array[0]);
+    if (upload_image_array.length > 0 && first_upload){
+        draw_image(upload_image_array, 0, src_canvas_id, upload_image_count_id);
+        first_upload = false;
     }
+    show_image_count(upload_image_array, upload_image_index, upload_image_count_id);
 }
 
 
 /** 
- * description
+ * read a image with FileReader
  * @params {file} file
  * @returns Image
  */ 
@@ -77,15 +95,22 @@ async function read_image_with_uploader(file){
  * draw img to canvas with variable target_canvas_id
  * @params {Image} img
  */ 
-function draw_image(img){
+function draw_image(image_array, image_index, target_canvas_id, label_count_id){
     let ctx = document.getElementById(target_canvas_id);
-    ctx.width = img.width;
-    ctx.height = img.height;
+    let img = image_array[image_index];
 
-    ctx = ctx.getContext("2d");
-    ctx.drawImage(img, 0, 0, img.width, img.height);
+    if (img.constructor.name == "Mat"){
+        cv.imshow(target_canvas_id, img);
+    }else{
+        ctx.width = img.width;
+        ctx.height = img.height;
+    
+        ctx = ctx.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+    }
+    
 
-    show_image_count();
+    show_image_count(image_array, image_index, label_count_id);
 }
 
 
