@@ -6,6 +6,7 @@
         <script type="text/javascript" src="../js/preprocess.js"></script>
         <script type="text/javascript" src="../js/ImageBase.js"></script>
         <script type="text/javascript" src="../js/ImageBaseTest.js"></script>
+        <script type="text/javascript" src="../js/util.js"></script>
         <script type="text/javascript" src="../js/numjs.min.js"></script>
         <script type="text/javascript" src="../js/opencv.js" async onload="console.log('opencv js end loading');"></script>
 
@@ -57,6 +58,8 @@
                 crop = src.roi(rect);
                 cv.imshow('html_dst_img', crop);
                 crop.delete();">Template Match and Crop(mean cut)</button>
+        <button onclick="img = image_similarity(src, templ, false, true);
+                cv.imshow('html_dst_img', img);">Template Match test</button>
         <br>
 
         <canvas id="html_src_img"></canvas>
