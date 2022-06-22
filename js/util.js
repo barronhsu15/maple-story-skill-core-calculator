@@ -42,6 +42,7 @@ var util = {
 
             if (this.array.length > this.k){
                 this.array.pop();
+                return;
             }
 
             if (!inserted && this.array.length < this.k){

@@ -53,13 +53,28 @@
                 cv.rectangle(src, maxPoint, point, color, 2, cv.LINE_8, 0);
                 cv.imshow('html_dst_img', src);">Template Match</button>
         <button onclick="maxPoint = image_similarity(src, templ, true)[0];
-                //rect = new cv.Rect(maxPoint.x, maxPoint.y, src.cols - maxPoint.x, src.rows - maxPoint.y);
-                rect = new cv.Rect(maxPoint.x + 30, maxPoint.y + templ.rows, 605, 85);
-                crop = src.roi(rect);
+                //crop = image_cut(src, maxPoint.x, maxPoint.y, src.cols - maxPoint.x, src.rows - maxPoint.y);
+                crop = image_cut(src, maxPoint.x + 30, maxPoint.y + templ.rows, 605, 85);
                 cv.imshow('html_dst_img', crop);
                 crop.delete();">Template Match and Crop(mean cut)</button>
         <button onclick="img = image_similarity(src, templ, false, true);
                 cv.imshow('html_dst_img', img);">Template Match test</button>
+        <button onclick="src_g = new cv.Mat();
+                templ_g = new cv.Mat();
+                cv.cvtColor(src, src_g, cv.COLOR_RGB2GRAY, 0);
+                cv.cvtColor(templ, templ_g, cv.COLOR_RGB2GRAY, 0);
+                cv.Laplacian(src_g, src_g, cv.CV_8U, 1, 1, 0, cv.BORDER_DEFAULT);
+                cv.Laplacian(templ_g, templ_g, cv.CV_8U, 1, 1, 0, cv.BORDER_DEFAULT);
+                dst = image_similarity(src_g, templ_g, false, true);
+                max_point_list = get_image_topk_point(dst, 11);
+                color = new cv.Scalar(255, 0, 0, 255);
+                for (i = 0; i < max_point_list.length; i++){
+                    point = new cv.Point(max_point_list[i].x + templ.cols, max_point_list[i].y + templ.rows);
+                    cv.rectangle(src, max_point_list[i], point, color, 2, cv.LINE_8, 0);
+                }
+                cv.imshow('html_dst_img', src);
+                src_g.delete();
+                templ_g.delete();">multi Template Match</button>
         <br>
 
         <canvas id="html_src_img"></canvas>
