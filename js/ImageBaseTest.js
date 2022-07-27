@@ -92,25 +92,16 @@ async function read_image_with_uploader(file){
 
 
 /** 
- * draw img to canvas with variable target_canvas_id
+ * draw img to canvas with variable target_canvas
  * @params {Image} img
  */ 
-function draw_image(image_array, image_index, target_canvas_id, label_count_id){
-    let ctx = document.getElementById(target_canvas_id);
+function draw_image(image_array, image_index, target_canvas, label_count_id){
     let img = image_array[image_index];
-
-    if (img.constructor.name == "Mat"){
-        cv.imshow(target_canvas_id, img);
-    }else{
-        ctx.width = img.width;
-        ctx.height = img.height;
+    util.draw_image(img, target_canvas);
     
-        ctx = ctx.getContext("2d");
-        ctx.drawImage(img, 0, 0, img.width, img.height);
+    if (label_count_id != undefined){
+        show_image_count(image_array, image_index, label_count_id);
     }
-    
-
-    show_image_count(image_array, image_index, label_count_id);
 }
 
 

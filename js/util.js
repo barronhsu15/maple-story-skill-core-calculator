@@ -1,4 +1,4 @@
-var util = {
+const util = {
     /** 
      * 2 dimension point and 1 value struct.
      * @params {int/double} x
@@ -84,12 +84,79 @@ var util = {
     /** 
      * search a target in array.
      * if target in array, will return idnex, else return -1
+     * note:can use binary search when sorted array
      * @params {array} array
      * @params {any type} target
      * @returns int
      */ 
     search_array : 
-    function search_array(array, target){
+    function search_array(array, target, sorted=false){
+        if (sorted){
+            return array.findIndex((e) => e == target);
+        }
         return array.findIndex((e) => e == target);
+    },
+
+
+    /**
+     * get a image from url
+     * @params {string} url
+     */
+    get_image_from_url : 
+    function get_image_from_url(url){
+        let img =  new Image();
+        img.crossOrigin = "anonymous";
+        img.src = url;
+        return img;
+    },
+
+
+    /**
+     * draw a image to canvas from url's image
+     * @params {string} url
+     * @params {string or dom_element} canvas
+     */
+    draw_image_to_canvas_from_url : 
+    function draw_image_to_canvas_from_url(url, canvas){
+        let img =  new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => util.draw_image(img, canvas);
+        img.src = url;
+        return img;
+    },
+
+
+    /**
+     * draw a image to canvas
+     * @params {Image} img 
+     * @params {string or dom_element} canvas 
+     */
+    draw_image : 
+    function draw_image(img, canvas){
+        let ctx = util.get_dom_element(canvas);
+        if (img.constructor.name == "Mat"){
+            cv.imshow(canvas, img);
+        }else{
+            ctx.width = img.width;
+            ctx.height = img.height;
+        
+            ctx = ctx.getContext("2d");
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+        }
+    },
+
+
+    /**
+     * get dom_element with string or dom_element
+     * @params {string or dom_element} element 
+     * @returns dom_element
+     */
+    get_dom_element : 
+    function get_dom_element(element){
+        if (typeof(element) == "string"){
+            return document.getElementById(element);
+        }else{
+            return element;
+        }
     }
 }
