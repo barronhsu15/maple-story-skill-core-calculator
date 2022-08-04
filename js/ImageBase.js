@@ -95,7 +95,8 @@ function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
  * @returns cv.Mat or double or [cv.point, double]
  */ 
 function image_similarity(src, templ, image_index=false, get_dst=false){
-    let dst = new cv.Mat();
+    let dst = new cv.Mat();   
+     
     cv.matchTemplate(src, templ, dst, cv.TM_CCOEFF_NORMED);
 
     if (get_dst == true){
@@ -106,10 +107,10 @@ function image_similarity(src, templ, image_index=false, get_dst=false){
     
     dst.delete();
 
-    if (image_index == undefined){
-        return result.maxVal;
+    if (image_index == true){
+        return [result.maxLoc, result.maxVal];
     }
     else{
-        return [result.maxLoc, result.maxVal]
+        return result.maxVal;
     }
 }

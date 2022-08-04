@@ -4,8 +4,8 @@ const preprocess = {
      */
     html_split_row_top : document.createElement("canvas"),
     html_core : document.createElement("canvas"),
-    split_row_top_img : "",
-    core_img : "",
+    split_row_top_img : undefined,
+    core_img : undefined,
     split_row_top_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/split-row-top.png",
     core_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/core-2.png",
 

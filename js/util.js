@@ -84,7 +84,7 @@ const util = {
     /** 
      * search a target in array.
      * if target in array, will return idnex, else return -1
-     * note:can use binary search when sorted array
+     * note:can use binary search in sorted array
      * @params {array} array
      * @params {any type} target
      * @returns int

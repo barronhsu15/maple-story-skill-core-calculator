@@ -105,6 +105,10 @@
 
         <canvas id="html_cut_img"></canvas>
         <br>
+
+        <button onclick="src = convert_image_data_to_opencv_mat(src_canvas_id);
+                        templ = convert_image_data_to_opencv_mat('html_cut_img');
+                        console.log(image_similarity(src, templ, false, false, false, false));">test 3 of 1 cos</button>
     </body>
     <script>
         preprocess.init();
