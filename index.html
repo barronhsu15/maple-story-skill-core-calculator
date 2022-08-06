@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-language" content="zh-TW" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <title>完美核心計算機 | MapleStory</title>
+
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <main>
+        <form>
+            <div class="form-box">
+                <label>職業</label>
+                <select id="form-job">
+                    <option value="">請選擇</option>
+                </select>
+
+                <label>核心技能數</label>
+                <select id="form-coreskills" disabled="disabled"></select>
+            </div>
+            <div class="form-box">
+                <label>挑選技能</label>
+                <div id="form-skills-container"></div>
+            </div>
+            <div class="form-box">
+                <label>選擇擁有的核心</label>
+                <div id="form-owned-cores-container"></div>
+            </div>
+        </form>
+    </main>
+
+    <script type="text/javascript" src="js/Jobs.js"></script>
+    <script type="text/javascript" src="js/Core.js"></script>
+    <script type="text/javascript" src="js/Event.js"></script>
+</body>
+</html>
