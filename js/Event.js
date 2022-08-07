@@ -52,14 +52,14 @@ function setFormSkillsContainer(job) {
         checkbox.dataset.name = Jobs[job].skills[i];
         label.setAttribute("for", "form-skill-" + i.toString());
         label.textContent = Jobs[job].skills[i];
-        img.setAttribute("src", "images/jobs/" + job + "/skills/" + Jobs[job].skills[i] + ".png");  // Can be changed to config file and printf e.g. images/jobs/%s/skills/%s.png
+        img.setAttribute("src", Jobs[job].skillImagePath.replace("{skill}", Jobs[job].skills[i]));
 
         span.append(checkbox);
         span.append(label);
         label.append(img);
         div.append(span);
 
-        checkbox.addEventListener("change", function() {
+        checkbox.addEventListener("change", function() {  // The event listener
             console.log(this.checked);
             skillsCheckboxController(job, this.dataset.name, this.checked);
         });
@@ -101,7 +101,7 @@ function setFormOwnedCoresContainer(job, skill) {
         checkbox.setAttribute("value", i);
         label.setAttribute("for", "form-owned-core-" + skill + "-" + i.toString());
         label.textContent = Jobs[job].coreskills[skill][i];
-        img.setAttribute("src", "images/jobs/" + job + "/coreskills/" + skill + "/" + Jobs[job].coreskills[skill][i] + ".png");  // Can be changed to config file and printf e.g. images/jobs/%s/coreskills/%s/%s.png
+        img.setAttribute("src", Jobs[job].coreskillImagePath.replace("{skill}", skill).replace("{core}", Jobs[job].coreskills[skill][i]));
 
         span.append(checkbox);
         span.append(label);
@@ -139,11 +139,11 @@ function skillsCheckboxController(job, skill, checked) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {  // The event listener for DOM ready
     setFormJob();
 });
 
-_formJob.addEventListener("change", function() {
+_formJob.addEventListener("change", function() {  // The event listener for form-job change
     let value = this.value;
 
     if (value === "") {  // not selected
@@ -158,7 +158,7 @@ _formJob.addEventListener("change", function() {
     }
 });
 
-_formCoreskills.addEventListener("change", function() {
+_formCoreskills.addEventListener("change", function() {  // The event listener for form-coreskills change
     let skills = _formSkillsContainer.querySelectorAll("input[type=checkbox]");
     
     for (let i = 0; i < skills.length; i++) {

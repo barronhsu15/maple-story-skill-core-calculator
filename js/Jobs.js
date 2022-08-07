@@ -6,6 +6,7 @@
 const Jobs = {
     adele: {
         name: "阿戴爾",
+        coreskillImagePath: "images/jobs/adele/coreskills/{skill}/{core}.png",
         coreskills: {
             切割: [
                 "共鳴-命令-切割",
@@ -92,6 +93,7 @@ const Jobs = {
                 "截斷-碎片-劍域-踐踏"
             ]
         },
+        skillImagePath: "images/jobs/adele/skills/{skill}.png",
         skills: [
             "切割",
             "穿刺",
