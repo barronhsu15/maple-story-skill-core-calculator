@@ -52,12 +52,14 @@ function formSkillsCheckboxController(job, skill, checked) {
     let skillsMax = (parseInt(_formCoreskills.value) + 1) * Core.skillsInCore;
 
     if (_skillsChecked.length === skillsMax) {
+        _formImageUploadBoxOpen.removeAttribute("disabled");
         _formStartCalculate.removeAttribute("disabled");
 
         Object.values(_skillsUnchecked).map(function (_skill) {
             _skill.setAttribute("disabled", "disabled");
         });
     } else {
+        _formImageUploadBoxOpen.setAttribute("disabled", "disabled");
         _formStartCalculate.setAttribute("disabled", "disabled");
 
         Object.values(_skillsUnchecked).map(function (_skill) {
@@ -70,6 +72,31 @@ function formSkillsCheckboxController(job, skill, checked) {
     } else {
         document.getElementById("form-owned-core-" + skill).remove();
     }
+}
+
+/**
+ * form-image-upload-box-open controller
+ */
+function formImageUploadBoxOpenController() {
+    _formImageUploadBox.removeAttribute("style");
+}
+
+/**
+ * form-image-upload-box-close controller
+ */
+function formImageUploadBoxCloseController() {
+    _formImageUploadBox.setAttribute("style", "display: none;");
+}
+
+/**
+ * form-image-upload-send controller
+ */
+function formImageUploadSendController() {
+    _images = _formImageUploadContainer.querySelectorAll("img[src]");
+
+    Object.values(_images).map(function (_image) {
+        console.log(_image.src);  // for dev
+    });
 }
 
 /**

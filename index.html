@@ -32,6 +32,7 @@
 
             <div class="form-box">
                 <label>選擇擁有的核心</label>
+                <button type="button" id="form-image-upload-box-open" disabled="disabled">貼上擷圖</button>
                 <div id="form-owned-cores-container"></div>
             </div>
         </form>
@@ -40,6 +41,19 @@
             <div id="perfect-cores-container"></div>
         </div>
     </main>
+
+    <div id="form-image-upload-box" class="top-box" style="display: none;">
+        <div id="form-image-upload-box-close" class="top-close-box"></div>
+        <form>
+            <div class="form-box">
+                <label>於方框直接貼上擷圖</label>
+                <div id="form-image-upload-container" contenteditable="true"></div>
+            </div>
+            <div class="form-box center-box">
+                <button id="form-image-upload-send" type="button">送出</button>
+            </div>
+        </form>
+    </div>
 
     <script type="text/javascript" src="js/Jobs.js"></script>
     <script type="text/javascript" src="js/Core.js"></script>
