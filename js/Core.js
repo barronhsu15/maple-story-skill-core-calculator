@@ -3,6 +3,7 @@
  */
 const Core = {
     skillsInCore: 3,
+    perfectSkills: 2,
     perfect: [
         "二核三技",
         "四核六技",

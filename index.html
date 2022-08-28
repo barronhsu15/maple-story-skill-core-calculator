@@ -21,6 +21,8 @@
 
                 <label>核心技能數</label>
                 <select id="form-coreskills" disabled="disabled"></select>
+
+                <button type="button" id="form-start-calculate" disabled="disabled">開始計算</button>
             </div>
 
             <div class="form-box">
@@ -33,10 +35,17 @@
                 <div id="form-owned-cores-container"></div>
             </div>
         </form>
+        <div class="result-box">
+            <label>完美核心計算結果</label>
+            <div id="perfect-cores-container"></div>
+        </div>
     </main>
 
     <script type="text/javascript" src="js/Jobs.js"></script>
     <script type="text/javascript" src="js/Core.js"></script>
+    <script type="text/javascript" src="js/Matcher.js"></script>
     <script type="text/javascript" src="js/Event.js"></script>
+    <script type="text/javascript" src="js/EventController.js"></script>
+    <script type="text/javascript" src="js/EventModel.js"></script>
 </body>
 </html>

@@ -57,13 +57,21 @@ hr {
     display: block;
 }
 
+input + button, select + button {
+    margin-left: 20px;
+}
+
 .form-box + .form-box {
     margin-top: 20px;
 }
 
 .sub-form-box {
     margin-top: 5px;
-    padding-left: 50px;
+    padding-left: 20px;
 } .sub-form-box + .sub-form-box {
+    margin-top: 20px;
+}
+
+.result-box {
     margin-top: 20px;
 }
