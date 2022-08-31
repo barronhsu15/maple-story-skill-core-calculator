@@ -101,6 +101,7 @@ const util = {
     /**
      * get a image from url
      * @params {string} url
+     * @returns img
      */
     get_image_from_url : 
     function get_image_from_url(url){
@@ -115,6 +116,7 @@ const util = {
      * draw a image to canvas from url's image
      * @params {string} url
      * @params {string or dom_element} canvas
+     * @returns img
      */
     draw_image_to_canvas_from_url : 
     function draw_image_to_canvas_from_url(url, canvas){
@@ -158,5 +160,18 @@ const util = {
         }else{
             return element;
         }
+    },
+
+
+    /**
+     * get array std
+     * @params {array} array
+     * @returns value
+     */
+    std :
+    function std (array) {
+        const n = array.length
+        const mean = array.reduce((a, b) => a + b) / n
+        return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
     }
 }

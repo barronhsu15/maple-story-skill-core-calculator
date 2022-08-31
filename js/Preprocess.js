@@ -14,8 +14,8 @@ const preprocess = {
     show_type_row_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/split-row-top.png",
     skill_rect_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/core-2.png",
     core_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/core-3.png",
-    in_self_matrix_get_count : 11,
-    in_core_master_matrix_get_count : 25,
+    image_similar_threshold : 0.2,
+    image_std : 4,
 
 
     /** 
@@ -86,10 +86,10 @@ const preprocess = {
         let skill_templ = convert_image_data_to_opencv_mat(preprocess.skill_rect_id);
         let cut_image_array = undefined;
         if (in_core_master == false){
-            cut_image_array = get_topk_similar_region(rect, skill_templ, preprocess.in_self_matrix_get_count);
+            cut_image_array = get_all_similar_region(rect, skill_templ, preprocess.image_similar_threshold, preprocess.image_std);
             rect.delete();
         }else{
-            cut_image_array = get_topk_similar_region(src, core_templ, preprocess.in_core_master_matrix_get_count);
+            cut_image_array = get_all_similar_region(src, core_templ, preprocess.image_similar_threshold, preprocess.image_std);
         }
 
         // step 4 - get skill list, if need
