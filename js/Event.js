@@ -7,6 +7,7 @@ var _formImageUploadBoxClose = document.getElementById("form-image-upload-box-cl
 var _formImageUploadBox = document.getElementById("form-image-upload-box");
 var _formImageUploadContainer = document.getElementById("form-image-upload-container");
 var _formImageUploadSend = document.getElementById("form-image-upload-send");
+var _formImageUploadCanvas = document.getElementById("form-image-upload-canvas");
 var _formStartCalculate = document.getElementById("form-start-calculate");
 var _perfectCoresContainer = document.getElementById("perfect-cores-container");
 
