@@ -14,7 +14,7 @@ const preprocess = {
     show_type_row_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/split-row-top.png",
     skill_rect_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/core-2.png",
     core_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/core-3.png",
-    image_similar_threshold : 0.2,
+    image_similar_threshold : 0.3,
     image_std : 4,
 
 
@@ -54,7 +54,7 @@ const preprocess = {
     get_core_list:
     function get_core_list(element){
         let src;
-        if (element.constructor.name === "string" || element.constructor.name === "HTMLImageElement"){
+        if (element.constructor.name === "String" || element.constructor.name === "HTMLImageElement"){
             src = convert_image_data_to_opencv_mat(element);
         }
         else {

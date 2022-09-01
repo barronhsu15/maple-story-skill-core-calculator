@@ -4,6 +4,10 @@
  * @returns cv.Mat
  */ 
 function convert_image_data_to_opencv_mat(element){
+    if (element.constructor.name === "Mat"){
+        return element;
+    }
+
     if (element.constructor.name == "HTMLImageElement"){
         let temp_canvas = document.createElement("canvas");
         util.draw_image(element, temp_canvas);
@@ -149,7 +153,7 @@ function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
             if (value >= threshold){
                 //console.log(value);   //dev
                 value_arr.push(value);
-                
+
                 //init point and insert point to array
                 let point = new util.point();
                 point.x = col;
@@ -188,8 +192,11 @@ function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
  * @returns cv.Mat or double or [cv.point, double]
  */ 
 function image_similarity(src, templ, image_index=false, get_dst=false){
-    let dst = new cv.Mat();   
-     
+    let dst = new cv.Mat();
+    
+    src = convert_image_data_to_opencv_mat(src);
+    templ = convert_image_data_to_opencv_mat(templ);
+
     cv.matchTemplate(src, templ, dst, cv.TM_CCOEFF_NORMED);
 
     if (get_dst == true){
