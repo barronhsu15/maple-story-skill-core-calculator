@@ -52,13 +52,13 @@ const preprocess = {
      * @returns array(cv.Mat)
      */
     get_core_list:
-    function get_core_list(canvas_id){
+    function get_core_list(element){
         let src;
-        if (typeof (canvas_id) == "string"){
-            src = convert_image_data_to_opencv_mat(canvas_id);
+        if (element.constructor.name === "string" || element.constructor.name === "HTMLImageElement"){
+            src = convert_image_data_to_opencv_mat(element);
         }
-        else if (typeof (canvas_id) == "HTMLImageElement"){
-            throw "you should input canvas id";
+        else {
+            throw "need pass canvas id or Image";
         }
 
         let show_type_row_templ = convert_image_data_to_opencv_mat(preprocess.show_type_row_id);

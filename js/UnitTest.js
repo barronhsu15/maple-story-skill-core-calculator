@@ -1,9 +1,6 @@
 unit_test = {
     /** 
-     * description
-     * @params {type} var1
-     * @params {type} var2
-     * @returns type
+     * test image_base.convert_image_data_to_opencv_mat function
      */ 
     test_image_base_convert_image_data_to_opencv_mat : 
     function test_image_base_convert_image_data_to_opencv_mat(){
@@ -17,7 +14,7 @@ unit_test = {
             test_canvas.id = "test_canvas";
             document.body.append(test_canvas);
             util.draw_image(img, "test_canvas");
-            
+
             console.assert(convert_image_data_to_opencv_mat("test_canvas").constructor.name == "Mat");
             console.assert(convert_image_data_to_opencv_mat(img).constructor.name == "Mat");
     
@@ -26,10 +23,7 @@ unit_test = {
     },
 
     /** 
-     * description
-     * @params {type} var1
-     * @params {type} var2
-     * @returns type
+     * run all unit test function
      */ 
     test_all : 
     function test_all(){

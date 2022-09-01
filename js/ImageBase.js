@@ -147,8 +147,9 @@ function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
             let value = src.row(row).col(col).data32F[0];
 
             if (value >= threshold){
-                console.log(value);
+                //console.log(value);   //dev
                 value_arr.push(value);
+                
                 //init point and insert point to array
                 let point = new util.point();
                 point.x = col;
@@ -161,7 +162,8 @@ function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
 
     if (std != undefined){
         std_value = util.std(value_arr);
-        console.log(`std_value:${std_value}`);
+        //console.log(`std_value:${std_value}`);    //dev
+
         for (let i = 0; i < value_arr.length; i++){
             if (value_arr[i] >= std_value * std){
                 filter_point_arr.push(all_point_arr[i]);
