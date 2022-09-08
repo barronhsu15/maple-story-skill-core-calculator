@@ -51,7 +51,7 @@
 
         <button onclick="maxPoint = image_similarity(src, templ, true)[0];
                 //crop = image_cut(src, maxPoint.x, maxPoint.y, src.cols - maxPoint.x, src.rows - maxPoint.y);
-                crop = image_cut(src, maxPoint.x + 30, maxPoint.y + templ.rows, 605, 85);
+                crop = image_cut(src, maxPoint.x + 30, maxPoint.y + templ.rows + 10, 605, 75);
                 cv.imshow('html_dst_img', crop);
                 crop.delete();">get core list image at image bottom</button>
 

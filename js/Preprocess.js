@@ -55,7 +55,7 @@ const preprocess = {
 
         // step 1 - get core list image at image bottom
         let maxPoint = image_similarity(src, show_type_row_templ, true)[0]; //search show_type_row in self matrix
-        let rect = image_cut(src, maxPoint.x + 30, maxPoint.y + show_type_row_templ.rows, 605, 85); //cut image from not using core
+        let rect = image_cut(src, maxPoint.x + 30, maxPoint.y + show_type_row_templ.rows + 10, 605, 75); //cut image from not using core
 
         // step 2 - get core image list
         let skill_templ = convert_image_data_to_opencv_mat(preprocess.skill_rect_id);
