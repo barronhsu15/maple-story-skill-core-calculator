@@ -155,7 +155,7 @@ const util = {
      */
     get_dom_element : 
     function get_dom_element(element){
-        if (typeof(element) == "string"){
+        if (element.constructor.name === "String"){
             return document.getElementById(element);
         }else{
             return element;

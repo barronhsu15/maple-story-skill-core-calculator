@@ -14,7 +14,6 @@ function convert_image_data_to_opencv_mat(element){
         let mat = cv.imread(temp_canvas);
         delete temp_canvas;
         return mat;
-
     }else if (element.constructor.name == "String"){
         return cv.imread(element);
     }else{
@@ -31,7 +30,7 @@ function convert_image_data_to_opencv_mat(element){
  * @returns array
  */ 
 function get_all_similar_region(src, templ, threshold, std=undefined){
-    let topk_region = new Array();
+    let all_region = new Array();
     let src_g = new cv.Mat();
     let templ_g = new cv.Mat();
 
@@ -46,13 +45,13 @@ function get_all_similar_region(src, templ, threshold, std=undefined){
 
     for (i = 0; i < max_point_list.length; i++){
         region = image_cut(src, max_point_list[i].x, max_point_list[i].y, templ.cols, templ.rows);
-        topk_region.push(region);
+        all_region.push(region);
     }
 
     src_g.delete();
     templ_g.delete();
 
-    return topk_region;
+    return all_region;
 }
 
 
@@ -63,7 +62,7 @@ function get_all_similar_region(src, templ, threshold, std=undefined){
  * @params {int} k
  * @returns array
  */ 
- function get_topk_similar_region(src, templ, k){
+function get_topk_similar_region(src, templ, k){
     let topk_region = new Array();
     let src_g = new cv.Mat();
     let templ_g = new cv.Mat();
@@ -90,22 +89,6 @@ function get_all_similar_region(src, templ, threshold, std=undefined){
 
 
 /** 
- * select a rectangle to get region in src(type is image).
- * @params {cv.Mat} src
- * @params {int} start_x
- * @params {int} start_y
- * @params {int} end_x
- * @params {int} end_y
- * @returns cv.Mat
- */ 
-function image_cut(src, start_x, start_y, end_x, end_y){
-    let rect = new cv.Rect(start_x, start_y, end_x, end_y);
-    let roi = src.roi(rect);
-    return roi;
-}
-
-
-/** 
  * get image top k similar point. 
  * if need get smallest, compare need change to '<'.
  * @params {cv.Mat} src
@@ -113,8 +96,8 @@ function image_cut(src, start_x, start_y, end_x, end_y){
  * @params {function} compare
  * @returns array
  */ 
-function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
-    let topk = new util.insert_sort(k, compare);
+function get_image_topk_point(src, k, comparer=(a, b) => a.value > b.value){
+    let topk = new util.insert_sort(k, comparer);
 
     for (let row = 0; row < src.rows; row++){
         for (let col = 0; col < src.cols; col++){
@@ -134,14 +117,17 @@ function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
 
 /** 
  * get all image similar point when similar over threshold. 
- * std can filtrate high similar value point. suggest use 4.
+ * std can filtrate high similar value point. suggest use 4. if not pass, will get all over threshold point.
  * if need get smallest, compare need change to '<'.
+ * @example get_image_point(src, 0.4)   will get all over threshold point.
+ * @example get_image_point(src, 0.4, 4)    will get filtrate point.
  * @params {cv.Mat} src
  * @params {int} threshold
+ * @params {double} std
  * @params {function} compare
  * @returns array
  */ 
- function get_image_point(src, threshold, std=undefined, compare=(a, b) => a.value > b.value){
+function get_image_point(src, threshold, std=undefined, compare=(a, b) => a.value > b.value){
     let all_point_arr = new Array();
     let value_arr = new Array();
     let filter_point_arr = new Array();
@@ -181,6 +167,22 @@ function get_image_topk_point(src, k, compare=(a, b) => a.value > b.value){
 
 
 /** 
+ * select a rectangle to get region in src(type is image).
+ * @params {cv.Mat} src
+ * @params {int} start_x
+ * @params {int} start_y
+ * @params {int} end_x
+ * @params {int} end_y
+ * @returns cv.Mat
+ */ 
+function image_cut(src, start_x, start_y, end_x, end_y){
+    let rect = new cv.Rect(start_x, start_y, end_x, end_y);
+    let roi = src.roi(rect);
+    return roi;
+}
+
+
+/** 
  * calc two images similarity.
  * if image_index = false, will get similarity value.
  * if image_index = true, will get similar point and similarity value
@@ -212,5 +214,30 @@ function image_similarity(src, templ, image_index=false, get_dst=false){
     }
     else{
         return result.maxVal;
+    }
+}
+
+
+const image_base = {
+    /* unit test
+     */
+    unit_test : 
+    function unit_test(){
+        console.log("---start : test_image_base_convert_image_data_to_opencv_mat---");
+    
+        let test_image_url = "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/core-2.png";
+        let img = util.get_image_from_url(test_image_url);
+    
+        img.onload = () => {
+            let test_canvas = document.createElement("canvas");
+            test_canvas.id = "test_canvas";
+            document.body.append(test_canvas);
+            util.draw_image(img, "test_canvas");
+    
+            console.assert(convert_image_data_to_opencv_mat("test_canvas").constructor.name == "Mat");
+            console.assert(convert_image_data_to_opencv_mat(img).constructor.name == "Mat");
+    
+            console.log("---end : test_image_base_convert_image_data_to_opencv_mat---");
+        };
     }
 }
