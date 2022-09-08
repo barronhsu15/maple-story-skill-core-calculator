@@ -169,9 +169,61 @@ const util = {
      * @returns value
      */
     std :
-    function std (array) {
+    function std(array) {
         const n = array.length
         const mean = array.reduce((a, b) => a + b) / n
         return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
+    },
+
+
+    /**
+     * calc spend time
+     * @params {function} run_function
+     * @returns string
+     */
+    spend_time :
+    function spend_time(run_function, format="hms", test_time=undefined) {
+        let start_time = Date.now();
+
+        run_function();
+
+        let end_time = Date.now();
+        let temp_time = (end_time - start_time) / 1000;
+        if (test_time != undefined){
+            temp_time = test_time / 1000;
+        }
+
+        let time_string = "";
+
+        // process hour
+        if (format.indexOf("h") >= 0 && temp_time / 3600 >= 1){
+            time_string += `${parseInt(temp_time / 3600)}h`;
+            temp_time -= parseInt(temp_time / 3600) * 3600;
+        }
+
+        //process minute
+        if (format.indexOf("m") >= 0 && temp_time / 60 >= 1){
+            time_string += `${parseInt(temp_time / 60)}m`;
+            temp_time -= parseInt(temp_time / 60) * 60;
+        }
+
+        // process seconds
+        if (format.indexOf("s") >= 0){
+            time_string += `${util.round(temp_time, 3)}s`;
+        }
+        
+        if (format.indexOf("h") === -1 && format.indexOf("m") === -1 && format.indexOf("s") === -1){
+            time_string += `${temp_time * 1000}ms`;
+        }
+
+        return time_string
+    },
+
+
+    /* get round
+     */
+    round : 
+    function round(num, m){
+        return Math.round(num * Math.pow(10, m)) / Math.pow(10, m);
     }
 }
