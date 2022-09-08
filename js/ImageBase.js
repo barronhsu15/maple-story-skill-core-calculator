@@ -171,12 +171,12 @@ function get_image_point(src, threshold, std=undefined, compare=(a, b) => a.valu
  * @params {cv.Mat} src
  * @params {int} start_x
  * @params {int} start_y
- * @params {int} end_x
- * @params {int} end_y
+ * @params {int} size_x
+ * @params {int} size_y
  * @returns cv.Mat
  */ 
-function image_cut(src, start_x, start_y, end_x, end_y){
-    let rect = new cv.Rect(start_x, start_y, end_x, end_y);
+function image_cut(src, start_x, start_y, size_x, size_y){
+    let rect = new cv.Rect(start_x, start_y, size_x, size_y);
     let roi = src.roi(rect);
     return roi;
 }
