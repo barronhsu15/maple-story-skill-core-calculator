@@ -172,12 +172,15 @@ const util = {
     function std(array) {
         const n = array.length
         const mean = array.reduce((a, b) => a + b) / n
-        return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
+        return Math.sqrt(array.map(x => ((x - mean) ** 2)).reduce((a, b) => a + b) / n)
     },
 
 
     /**
      * calc spend time
+     * how to use:
+     * 1. util.spend_time(() => function_name(params));
+     * 2. util.spend_time(() => { return function_name(params) });
      * @params {function} run_function
      * @returns string
      */
@@ -185,7 +188,7 @@ const util = {
     function spend_time(run_function, format="hms", test_time=undefined) {
         let start_time = Date.now();
 
-        run_function();
+        let result = run_function();
 
         let end_time = Date.now();
         let temp_time = (end_time - start_time) / 1000;
@@ -216,14 +219,19 @@ const util = {
             time_string += `${temp_time * 1000}ms`;
         }
 
-        return time_string
+        console.log(time_string);
+
+        return result
     },
 
 
-    /* get round
-     */
+    /** 
+     * get round
+     * @params {number} num
+     * @params {number} m
+     */ 
     round : 
     function round(num, m){
-        return Math.round(num * Math.pow(10, m)) / Math.pow(10, m);
+        return Math.round(num * (10 ** m)) / (10 ** m);
     }
 }
