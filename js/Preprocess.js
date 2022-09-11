@@ -12,7 +12,7 @@ const preprocess = {
     skill_rect_url : "https://raw.githubusercontent.com/cool9203/maple-story-skill-core-calculator/master/images/core-2.png",
     image_similar_threshold : 0.3,
     image_std : 4,
-
+    
 
     /** 
      * init Preprocess.js
@@ -37,8 +37,8 @@ const preprocess = {
 
     
     /**
-     * get core list from canvas
-     * @params {string} canvas_id
+     * get core list from canvas or Image
+     * @params {string/Image} element
      * @returns array(cv.Mat)
      */
     get_core_list:
@@ -48,7 +48,7 @@ const preprocess = {
             src = convert_image_data_to_opencv_mat(element);
         }
         else {
-            throw "need pass canvas id or Image";
+            throw Error("need pass canvas id or Image");
         }
 
         let show_type_row_templ = convert_image_data_to_opencv_mat(preprocess.show_type_row_id);

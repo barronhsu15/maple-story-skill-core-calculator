@@ -170,17 +170,16 @@ const util = {
      */
     std :
     function std(array) {
-        const n = array.length
-        const mean = array.reduce((a, b) => a + b) / n
+        let n = array.length
+        let mean = array.reduce((a, b) => a + b) / n
         return Math.sqrt(array.map(x => ((x - mean) ** 2)).reduce((a, b) => a + b) / n)
     },
 
 
     /**
      * calc spend time
-     * how to use:
-     * 1. util.spend_time(() => function_name(params));
-     * 2. util.spend_time(() => { return function_name(params) });
+     * @example util.spend_time(() => function_name(params));
+     * @example util.spend_time(() => { return function_name(params) });
      * @params {function} run_function
      * @returns string
      */

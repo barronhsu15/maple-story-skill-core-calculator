@@ -17,7 +17,7 @@ function convert_image_data_to_opencv_mat(element){
     }else if (element.constructor.name == "String"){
         return cv.imread(element);
     }else{
-        throw "function convert_image_data_to_opencv_mat need pass canvas id or Image.";
+        throw Error("function convert_image_data_to_opencv_mat need pass canvas id or Image.");
     }
 }
 
