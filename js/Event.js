@@ -32,25 +32,3 @@ _formCoreskills.addEventListener("change", function () {
 _formStartCalculate.addEventListener("click", function () {
     formStartCalculateController();
 });
-
-/**
- * For development
- * Can be remove
- */
-function dev() {
-    _formJob.value = "adele";
-    _formJob.dispatchEvent(new Event("change"));
-
-    _formCoreskills.value = "1";
-    _formCoreskills.dispatchEvent(new Event("change"));
-
-    [0, 2, 3, 4, 5, 6].map(function (x) {
-        document.getElementById("form-skill-" + x.toString()).click();
-    });
-
-    Object.values(_formOwnedCoresContainer.querySelectorAll("input[type=checkbox]")).map(function (checkbox) {
-        checkbox.click();
-    });
-
-    _formStartCalculate.click();
-}
