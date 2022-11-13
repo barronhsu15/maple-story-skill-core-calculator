@@ -114,7 +114,6 @@ function formImageUploadSendController() {
                 let maxIndex = 0;
                 let maxSimilarity = 0.0;
                 let maxSimilarityTemplateCore = undefined;
-                let maxSimilarityTemplateImg = undefined;
 
                 for (i in ownCoreskillsMatrixList) {
                     let src_g = new cv.Mat();
@@ -132,11 +131,10 @@ function formImageUploadSendController() {
                         maxIndex = i;
                         maxSimilarity = similarity;
                         maxSimilarityTemplateCore = core;
-                        maxSimilarityTemplateImg = this;
                     }
                 }
 
-                if (maxSimilarityTemplateCore !== undefined && maxSimilarityTemplateImg !== undefined) {
+                if (maxSimilarityTemplateCore !== undefined) {
                     _formOwnedCoresContainer.querySelector("#form-owned-core-" + skill + "-" + maxIndex).checked = true;
                     document.querySelector("#form-owned-core-" + skill + " details").open = true;
                 }
