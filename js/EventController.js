@@ -108,7 +108,7 @@ function formImageUploadSendController() {
         let skill = _selectedSkill.dataset.skill;
 
         Jobs[job].cores[skill].map(function (core) {
-            let coreImageUrl = "https://barronhsu15.github.io/maple-story-skill-core-calculator/" + Jobs[job].coreskillImagePath.replace("{skill}", skill).replace("{core}", core);
+            let coreImageUrl = Jobs[job].coreskillImagePath.replace("{skill}", skill).replace("{core}", core);
             let _img = util.get_image_from_url(coreImageUrl);
 
             _img.addEventListener("load", function () {
