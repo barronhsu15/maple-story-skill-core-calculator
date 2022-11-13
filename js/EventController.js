@@ -91,8 +91,6 @@ function formImageUploadBoxCloseController() {
 
 /**
  * form-image-upload-send controller
- * 
- * @todo
  */
 function formImageUploadSendController() {
     let _selectedSkills = _formSkillsContainer.querySelectorAll("input[type=checkbox]:checked");
